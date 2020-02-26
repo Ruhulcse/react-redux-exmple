@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import FormKit from "react-bootstrap-formkit";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {addNewUser} from './data';
+import {addNewUser,updateUser} from './data';
 
 
 class AddUserForm extends Component {
     constructor(props){
         super(props);
         this.initialState = {
+            id :props.id,
             name : props.name || "",
             department : props.department || "",
             contact : props.contact || ""
@@ -35,7 +36,11 @@ class AddUserForm extends Component {
         }
 
     handleSubmit = async data => {
+        if(this.props.formOperation == "EDIT"){
+            this.props.updateUser(this.props.id, data);
+        }else{
             this.props.addNewUser(data);
+        }
         };
     
     
@@ -55,12 +60,14 @@ class AddUserForm extends Component {
 
 function mapStateToProps(state) {
     return {
-      
+      toogleAddUserFormStatus : state.userReducer.toogleEditUserFormStatus,
+      formOperation : state.userReducer.formOperation
     }
   }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    addNewUser: addNewUser
+    addNewUser: addNewUser,
+    updateUser: updateUser
 }, dispatch)
 
   

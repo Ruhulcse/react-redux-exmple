@@ -21,9 +21,30 @@ export const add_user = (payload) => {
     }
 }
 
+export const update_user = (payload) =>{
+    return {
+        type: USER.UPDATE,
+        payload: payload
+    }
+}
+
+export const get_single_user =(payload)=>{
+    return {
+        type: USER.GETSINGLEUSER,
+        payload: payload
+    }
+}
+
 export const open_add_user_form = (payload) => {
     return {
         type: USER.OPENADDUSERFORM,
+        payload: payload
+    }
+}
+
+export const change_form_operation = (payload) =>{
+    return {
+        type: USER.FORMOPERATION,
         payload: payload
     }
 }

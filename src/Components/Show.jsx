@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {getAllUsers,deleteUser, toggleAddUserForm} from './data';
+import {getAllUsers,deleteUser,getSingleUser,updateUser,toggleAddUserForm,changeFormOperation} from './data';
 import AddUserForm from './formkit';
 
 
@@ -10,16 +10,15 @@ export class Show extends Component {
 
 componentDidMount() {
     this.props.getAllUsers()
-
  }
-    
+
 render() {
     return (
         <div className="container">
             <div className="row">
                 <div className="col-6">
                     { this.props.toogleAddUserFormStatus &&
-                        <AddUserForm />
+                        <AddUserForm id={this.props.singleUser.id} name={this.props.singleUser.name} contact = {this.props.singleUser.contact} department = {this.props.singleUser.department}/>
                     }
                 </div>
             </div>
@@ -49,10 +48,14 @@ render() {
                                     <td>{user.name}</td>
                                     <td>{user.department}</td>
                                     <td>{user.contact}</td>
-                                    <td><Link className="btn btn-success" to={`update/${user.id}`}>Update</Link></td>
-                                    <td><button type="button" className="btn btn-danger" onClick={()=>this.props.deleteUser(user.id)}>Delete</button></td>
+                                    <td>
+                                        <button className="btn btn-outline-primary btn-md" onClick={()=>{
+                                            this.props.changeFormOperation("EDIT");
+                                            this.props.getSingleUser(user.id)}}>Update
+                                        </button>
+                                    </td>
+                                    <td><button type="button" className="btn btn-danger" onClick={()=>{this.props.deleteUser(user.id)}}>Delete</button></td>
                                 </tr>
-
                             </React.Fragment>
                         );
                     })}
@@ -67,22 +70,21 @@ render() {
 function mapStateToProps(state) {
     return {
       users: state.userReducer.users,
+      singleUser: state.userReducer.singleUser,
       usersLoading : state.userReducer.usersLoading,
-      toogleAddUserFormStatus: state.userReducer.toogleAddUserFormStatus
+      toogleAddUserFormStatus: state.userReducer.toogleAddUserFormStatus,
+      formOperation : state.userReducer.formOperation
     }
   }
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = dispatch => bindActionCreators({ 
     getAllUsers: getAllUsers,
     deleteUser : deleteUser,
-    toggleAddUserForm : toggleAddUserForm
+    updateUser : updateUser,
+    getSingleUser : getSingleUser,
+    toggleAddUserForm : toggleAddUserForm,
+    changeFormOperation : changeFormOperation
 }, dispatch)
 
-// function mapDispatchToProps(dispatch) {
-//     return {
-//       getAllUsers: bindActionCreators(getAllUsers, dispatch),
-//       deleteUser : bindActionCreators(deleteUser, dispatch)
-//     }
-//   }
   
-  export default connect(mapStateToProps, mapDispatchToProps)(Show);
+export default connect(mapStateToProps, mapDispatchToProps)(Show);

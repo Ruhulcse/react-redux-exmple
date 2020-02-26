@@ -11,7 +11,7 @@ function App() {
     <div className="App">
       <Router>
         <Route exact path="/" component = {Show } />
-        {/* <Route exact path="/update/:id" component = {Update }/> */}
+        <Route exact path="/update/:id" component = {Update }/>
       </Router>
     </div>
   );

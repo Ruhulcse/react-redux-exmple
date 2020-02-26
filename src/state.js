@@ -5,7 +5,8 @@ let initialState = {
     singleUser: {},
     singleUserLoading: true,
     deleteUserInfo: {},
-    toogleAddUserFormStatus : false
+    toogleAddUserFormStatus : false,
+    formOperation : null
 }
 
 export default initialState;

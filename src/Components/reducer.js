@@ -12,10 +12,28 @@ const userReducer = (state = initialState, action) => {
             })
             return nextState;
         }
+        case USER.UPDATE: {
+            const nextState = produce (state,draft=>{
+                draft.users.forEach(user => {
+                    if(user.id == action.payload.id){
+                        user.name = action.payload.name;
+                        user.department = action.payload.department;
+                        user.contact = action.payload.contact;
+                    }
+                })
+            })
+            return nextState;
+        }
         case USER.GETALL: {
             const nextState = produce(state, draft => {
                 draft.users = action.payload;
                 draft.usersLoading = false;
+            })
+            return nextState;
+        }
+        case USER.GETSINGLEUSER: {
+            const nextState =produce(state, draft => {
+                draft.singleUser = action.payload;
             })
             return nextState;
         }
@@ -28,6 +46,12 @@ const userReducer = (state = initialState, action) => {
                 }
             })
 
+            return nextState;
+        }
+        case USER.FORMOPERATION: {
+            const nextState = produce(state, draft => {
+                draft.formOperation = action.payload;
+            })
             return nextState;
         }
         case USER.OPENADDUSERFORM: {
