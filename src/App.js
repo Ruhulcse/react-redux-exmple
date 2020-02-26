@@ -10,8 +10,7 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Route exact path="/" component={Form}/>
-        <Route exact path="/show" component = {Show } />
+        <Route exact path="/" component = {Show } />
         {/* <Route exact path="/update/:id" component = {Update }/> */}
       </Router>
     </div>
